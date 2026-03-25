@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueLess+ - Welcome</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="splash-body">
+    <!-- Dedicated Splash Screen -->
+    <div id="splash-screen" class="splash-fullscreen">
+        <img src="static/images/logo.png" alt="QueueLess Mascot" class="mascot-logo splash-logo" onerror="this.src='https://placehold.co/180x180/e0f2fe/0ea5e9?text=Mascot'">
+        <h1>QueueLess+</h1>
+        <p class="loading-text">Loading your queue magic...</p>
+        <div class="bubble-loader">
+            <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Redirect to login after splash finishes
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            splash.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            splash.style.opacity = '0';
+            splash.style.transform = 'scale(1.5)';
+            
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 800);
+        }, 2200);
+    </script>
+</body>
+</html>

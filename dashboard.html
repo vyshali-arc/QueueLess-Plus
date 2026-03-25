@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueLess+ - Dashboard</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <img src="static/images/logo.png" class="nav-logo" onerror="this.src='https://placehold.co/40x40/e0f2fe/0ea5e9?text=Q+'" alt="Logo">
+            <span>QueueLess+</span>
+        </div>
+        <div class="nav-metrics glass-panel" style="display:flex; gap:15px; padding:6px 15px; border-radius:20px; font-size: 0.9rem; margin-right:auto; margin-left: 20px;">
+            <span id="live-clock" style="font-weight:bold; letter-spacing:1px;">00:00:00</span>
+            <span id="service-status" style="color: #10b981; font-weight:bold;"><i class="fas fa-circle"></i> Open</span>
+        </div>
+        <div class="user-profile">
+            <span id="display-name">User</span>
+            <div class="settings-menu" style="position: relative; display: inline-block;">
+                <button class="glass-btn-small" onclick="toggleSettings()" title="Settings"><i class="fas fa-cog"></i></button>
+                <div id="settings-dropdown" class="glass-panel" style="display: none; position: absolute; right: 0; top: 120%; min-width: 160px; padding: 10px; flex-direction: column; gap: 8px;">
+                    <button class="service-btn" style="width: 100%; border: none; padding: 8px; border-radius: 8px; background: transparent;" onclick="toggleTheme()"><i class="fas fa-moon"></i> Theme</button>
+                </div>
+            </div>
+            <button class="glass-btn-small" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </nav>
+    
+    <!-- Radial Glow Depth -->
+    <div class="radial-glow"></div>
+
+    <main class="dashboard-container">
+        <!-- New Token Generation -->
+        <section class="booking-section glass-panel">
+            <h2><i class="fas fa-calendar-plus floating-icon"></i> Book Service</h2>
+            <div class="service-options">
+                <button class="glass-btn service-btn" onclick="selectService('Hospital', this)"><i class="fas fa-hospital"></i> Hospital</button>
+                <button class="glass-btn service-btn" onclick="selectService('Salon', this)"><i class="fas fa-cut"></i> Salon</button>
+                <button class="glass-btn service-btn" onclick="selectService('Bank', this)"><i class="fas fa-university"></i> Bank</button>
+            </div>
+            <button class="glass-btn btn-primary submit-booking" id="book-btn" onclick="submitBooking()" disabled>Get Token</button>
+        </section>
+        
+        <!-- Current Token Status -->
+        <section class="status-section glass-panel">
+            <h2><i class="fas fa-ticket-alt floating-icon"></i> Your Token</h2>
+            <div id="my-token-display" class="token-display">
+                <p>No active token.</p>
+            </div>
+        </section>
+
+        <!-- Live Queue -->
+        <section class="queue-section glass-panel" style="position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2><i class="fas fa-users floating-icon"></i> Live Queue</h2>
+                <span id="queue-speed-badge" class="glass-badge" style="background: rgba(255,255,255,0.7); font-weight:bold; padding: 6px 15px; border-radius: 20px;">
+                    <i class="fas fa-circle" style="font-size:0.8em; margin-right:5px; color:#10b981;"></i> Fast
+                </span>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-labels">
+                    <span id="serving-label">Now Serving: #--</span>
+                    <span id="total-tokens-label">Total Tokens: --</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="queue-progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="queue-stats">
+                <div class="stat-box">
+                    <h3>Today's Tokens</h3>
+                    <p id="total-tokens-today">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Waiting</h3>
+                    <p id="total-waiting">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Est. Time</h3>
+                    <p id="est-time">0 min</p>
+                </div>
+            </div>
+            <div class="queue-list" id="queue-list">
+                <!-- Queue Items dynamically generated here -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-box glass-panel" id="chat-box">
+            <div class="chat-header">QueueLess Assistant</div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-msg bot">Hi! I'm the QueueLess+ Assistant. How can I help you today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div class="chat-toggle" onclick="toggleChat()" style="padding:0; overflow:hidden; background:transparent;">
+            <img src="static/images/logo.png" alt="Chat" style="width:100%; height:100%; object-fit:cover; border-radius:50%; box-shadow:var(--shadow);" onerror="this.src='https://placehold.co/60x60/e0f2fe/0ea5e9?text=C'">
+        </div>
+    </div>
+
+    <!-- Mascot Toast Alert -->
+    <div id="mascot-toast" class="mascot-toast glass-panel">
+        <img src="static/images/logo.png" alt="Mascot" class="toast-mascot" onerror="this.src='https://placehold.co/60x60/e0f2fe/0ea5e9?text=M'">
+        <div class="toast-content">
+            <h3 style="font-size: 1.1rem; margin:0;">Yay! 🎉</h3>
+            <p id="toast-msg">Your token is generated!</p>
+        </div>
+    </div>
+
+    <script src="static/js/main.js"></script>
+    <script>
+        if (!localStorage.getItem('queueless_user')) {
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('display-name').textContent = localStorage.getItem('queueless_user');
+            if (typeof initLocalQueue === 'function') initLocalQueue();
+        }
+    </script>
+</body>
+</html>

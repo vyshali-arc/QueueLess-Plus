@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueLess+ - Sign Up</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="splash-body">
+    <div class="splash-container" style="animation: none;">
+        <img src="static/images/logo.png" alt="QueueLess Mascot" class="mascot-logo" onerror="this.src='https://placehold.co/180x180/e0f2fe/0ea5e9?text=Mascot'">
+        <h1>Join QueueLess+</h1>
+        
+        <div class="auth-box glass-panel slide-up" id="auth-box">
+            <input type="email" id="signup-email" placeholder="Email Address" class="glass-input">
+            <input type="password" id="signup-password" placeholder="Create Password" class="glass-input">
+            <button class="glass-btn btn-primary" onclick="processAuth('signup')">Sign Up</button>
+            <p style="margin-top: 15px; font-size: 0.9rem;">
+                Already have an account? <a href="login.html" style="color: var(--accent); font-weight: bold; text-decoration: none;">Login</a>
+            </p>
+        </div>
+    </div>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
